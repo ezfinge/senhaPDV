@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senha PDV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #senhaGerada {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerador de Senha PDV</h1>
+        <label for="numero">Digite o número do PDV:</label><br>
+        <input type="number" id="numero" placeholder="Ex: 407" required><br>
+        <button onclick="gerarSenha()">Gerar Senha</button>
+        <p id="senhaGerada"></p>
+    </div>
+
+    <script>
+        function gerarSenha() {
+            const numeroInput = document.getElementById('numero').value;
+            const numero = parseInt(numeroInput);
+            const senhaOutput = document.getElementById('senhaGerada');
+
+            if (isNaN(numero) || numeroInput === '') {
+                senhaOutput.textContent = 'Por favor, insira um número válido!';
+                senhaOutput.style.color = '#dc3545';
+                return;
+            }
+
+            // Obtém a data atual (a senha muda diariamente com base na data)
+            const hoje = new Date();
+            const dia = hoje.getDate(); // Dia do mês (1 a 31)
+            const mes = hoje.getMonth() + 1; // Mês (0 a 11, somamos 1 para 1 a 12)
+
+            // Concatena dia e mês como strings, preservando o formato
+            const diaStr = dia.toString(); // Ex.: 10 -> "10", 3 -> "3"
+            const mesStr = mes.toString(); // Ex.: 12 -> "12", 4 -> "4"
+            const concatenado = parseInt(diaStr + mesStr); // Ex.: "10" + "12" = "1012" -> 1012
+
+            // Calcula a senha: PDV + concatenado
+            const resultado = numero + concatenado;
+
+            // Formata a senha como pdv@<resultado>
+            const senha = `pdv@${resultado}`;
+            senhaOutput.textContent = `Senha gerada: ${senha}`;
+            senhaOutput.style.color = '#28a745';
+        }
+    </script>
+</body>
+</html>
