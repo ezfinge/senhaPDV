@@ -60,11 +60,13 @@
         }
     </style>
 </head>
-<body>
-    <audio autoplay loop>
+    <body>
+        <audio id="musicaFundo" loop>
         <source src="song.mp3" type="audio/mpeg">
         Seu navegador não suporta o elemento de áudio.
     </audio>
+
+    <button onclick="document.getElementById('musicaFundo').play()">Tocar Música</button>
     <div class="container">
         <h1>Gerador de Senha PDV</h1>
         <label for="numero">Digite o número do PDV:</label><br>
